@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>리딩플래닛</title>
+<link rel="icon" href="logo.png">
+<link rel="apple-touch-icon" href="logo.png">
+<style>
+  :root{
+    --ink:#2A2C2E; --soft:#6E7276; --line:#E6E3E0; --card:#fff; --bg:#FFFFFF;
+    --coral:#ED7577; --coral-tint:#FDF1F1;      /* 로고의 ‘리’ */
+    --purple:#C165A4; --purple-tint:#FAF0F7;    /* 로고의 ‘딩’ */
+    --gray:#666465;                              /* 로고의 글자 */
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;min-height:100vh;background:var(--bg);color:var(--ink);
+       font-family:"Malgun Gothic","맑은 고딕",system-ui,sans-serif;
+       display:flex;flex-direction:column;align-items:center;
+       padding:40px 20px 48px}
+  .mark{width:min(300px,62vw);height:auto;display:block}
+  .bar{width:min(300px,62vw);height:5px;border-radius:99px;margin:16px 0 10px;
+       background:linear-gradient(90deg,var(--coral) 0 38%,var(--purple) 38% 68%,var(--gray) 68% 100%)}
+  p.lede{color:var(--soft);font-size:17px;margin:0 0 30px;text-align:center}
+  .apps{display:flex;flex-wrap:wrap;gap:18px;justify-content:center;width:100%;max-width:780px}
+  a.app{flex:1 1 330px;min-height:160px;display:flex;flex-direction:column;justify-content:center;gap:7px;
+        padding:26px 28px;border-radius:22px;border:2px solid var(--line);background:var(--card);
+        text-decoration:none;color:inherit;box-shadow:0 2px 0 rgba(0,0,0,.04)}
+  a.app:active{transform:scale(.99)}
+  a.app .en{font-size:13px;letter-spacing:.09em;font-weight:700}
+  a.app b{font-size:29px;letter-spacing:-.01em}
+  a.app span.ko{font-size:16px;color:var(--soft)}
+  a.sentence{border-color:var(--coral);background:var(--coral-tint)} a.sentence .en{color:var(--coral)}
+  a.writing{border-color:var(--purple);background:var(--purple-tint)} a.writing .en{color:var(--purple)}
+  footer{margin-top:36px;font-size:14px;color:var(--soft);text-align:center;line-height:1.75}
+</style>
+</head>
+<body>
+  <img class="mark" src="logo.png" alt="리딩플래닛">
+  <div class="bar"></div>
+  <p class="lede">오늘 할 것을 누르세요.</p>
+  <div class="apps">
+    <a class="app sentence" href="sentence.html">
+      <span class="en">SENTENCE PRACTICE</span>
+      <b>문장 연습</b>
+      <span class="ko">규칙을 배우고 문장을 만들어요 · 1–12권</span>
+    </a>
+    <a class="app writing" href="writing.html">
+      <span class="en">WRITING</span>
+      <b>라이팅</b>
+      <span class="ko">글 쓰는 법을 배우고 써 봐요 · 1–6권</span>
+    </a>
+  </div>
+  <footer>
+    기록은 이 태블릿 안에 이름별로 저장돼요.<br>
+    화면이 안 열리면 선생님께 말해 주세요.
+  </footer>
+</body>
+</html>
