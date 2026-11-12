@@ -299,6 +299,8 @@ const mdb = s => esc(s).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>");
 const plain = s => String(s).replace(/\*\*/g, "");
 const first = a => Array.isArray(a) ? a[0] : a;
 const list = a => Array.isArray(a) ? a : [a];
+/* 섞은 차례가 그대로 답이 되면(왼쪽부터 눌러도 정답) 다시 섞는다 — 다독 세션 2026-11-12 */
+function shuffleAvoid(a, bad){ for (let i = 0; i < 24; i++){ const x = shuffle(a); if (!bad(x)) return x; } return a.slice().reverse(); }
 function shuffle(a){ a = a.slice(); for (let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
 /* 견줄 때는 대소문자 · 문장부호 · 줄임말 · 흔한 같은 뜻 낱말을 따지지 않는다 — app_build.py 의 norm() 과 똑같이 둔다
    don't = do not · she's = she is · you're = you are · I'll = I will · I'd like = I would like · father = dad · children = kids · little sister = sister */
@@ -708,7 +710,7 @@ function drawFix(q, st, it, cur){
 
 /* 4. 블록 순서 */
 function drawOrder(q, st, it, cur){
-  const chips = shuffle(it.chips.map((c, i) => ({c, i})));
+  const chips = shuffleAvoid(it.chips.map((c, i) => ({c, i})), x => it.a.some(a => norm(a) === norm(x.map(o => o.c).join(" "))));
   const end = (it.a[0].match(/[.?!]$/) || ["."])[0];
   // 같은 블록으로 묻는 문장 · 말하는 문장이 둘 다 되므로 끝 부호를 처음부터 알려 준다 (검수 2026-09-13)
   const endNote = end === "?" ? "묻는 문장이에요 — 끝에 물음표( ? )가 와요." : "말하는 문장이에요 — 끝에 마침표( . )가 와요.";
@@ -763,7 +765,8 @@ function modeBtn(it){
 }
 function drawCards(q, st, it, cur){
   const need = it.cards.length, text = k => k < need ? it.cards[k] : it.decoy[0];
-  const pool = shuffle(it.cards.concat(it.decoy ? [it.decoy[0]] : []).map((c, i) => ({c, i})));
+  const pool = shuffleAvoid(it.cards.concat(it.decoy ? [it.decoy[0]] : []).map((c, i) => ({c, i})),
+                            x => it.a.some(a => norm(a) === norm(x.filter(o => o.i < need).map(o => o.c).join(" "))));
   const end = (it.a[0].match(/[.?!]$/) || ["."])[0];
   q.insertAdjacentHTML("beforeend", '<p class="ko-prompt">' + esc(it.ko) + '</p>' + modeBtn(it) +
     '<div class="slotline en" id="sl"></div><div class="pool en" id="pool">' +
